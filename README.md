@@ -1,68 +1,70 @@
-#ROS-Merge-Arrays-Challenge
-This repository contains the solution to the Wisconsin Autonomous ROS Coding Challenge. The challenge required the creation of a ROS2 node that merges two sorted integer arrays from different topics into a single, sorted array.
+# ROS-Merge-Arrays-Challenge
 
-##Project Structure
-The files and folders in this repository represent the merge_arrays ROS 2 package. The structure of the project is as follows:
+This repository contains the solution to the Wisconsin Autonomous ROS Coding Challenge. The challenge required the creation of a ROS 2 node that merges two sorted integer arrays from different topics into a single, sorted array.
 
+## Project Structure
+
+The files and folders in this repository are part of the `merge_arrays` ROS 2 package. The file structure is shown below:
+
+```
 ├── README.md
 ├── src
 │   └── merge_arrays_node.py
 ├── CmakeLists.txt
 ├── package.xml
 ├── setup.py
-src/merge_arrays_node.py: The Python script containing the ROS 2 node that handles the merging logic.
+```
 
-CmakeLists.txt and package.xml: Standard ROS 2 configuration files.
+  * `src/merge_arrays_node.py`: The Python script for the ROS 2 node.
+  * `CmakeLists.txt` and `package.xml`: Standard ROS 2 configuration files.
+  * `setup.py`: The Python-specific build file.
 
-setup.py: The Python-specific build file for the ROS 2 package.
+**Note on Repository Structure**: Due to an issue with RAM allocation in the Ubuntu virtual machine, the parent folder was not added to the repository. The folders and files are at the root level of this repository, mirroring the local file structure as seen in the photo provided.
 
-##Note on Repository Structure:
+-----
 
-Due to an issue with RAM allocation in the Ubuntu virtual machine, the main repository folder was not committed as the parent. As a result, the src folder, CmakeLists.txt, package.xml, and setup.py are at the root level of this repository, as shown in the screenshot of my local file structure.
+## Challenge Description
 
-##Challenge Description
-The objective of this challenge was to create a ROS 2 node, merge_arrays_node, within a package named merge_arrays.
+The objective was to design a node, **`merge_arrays_node`**, in a package named **`merge_arrays`**.
 
-This node subscribes to two topics:
+The node subscribes to two ROS topics:
 
-/input/array1 (Type: std_msgs/Int32MultiArray)
+  * `/input/array1` (Type: `std_msgs/Int32MultiArray`, Content: a sorted `Int32` array)
+  * `/input/array2` (Type: `std_msgs/Int32MultiArray`, Content: a sorted `Int32` array)
 
-/input/array2 (Type: std_msgs/Int32MultiArray)
+The node merges these two arrays into a single, sorted array and publishes the result to the `/output/array` topic (Type: `std_msgs/Int32MultiArray`).
 
-It then merges the two sorted integer arrays received from these topics into a single sorted array. This merged array is published to the /output/array topic, which also has the type std_msgs/Int32MultiArray.
+**Example**: Given `[1 4 8 12 26]` and `[3 9 18 20 30]`, the node should publish `[1 3 4 8 9 12 18 20 26 30]`.
 
-For example, given [1 4 8 12 26] and [3 9 18 20 30], the node should publish [1 3 4 8 9 12 18 20 26 30].
+-----
 
-##Solution
-The solution is implemented in Python and follows the provided submission specifications. The node handles the subscription to both input topics and uses a callback function to perform the merging and publishing operations. The logic is designed to be efficient for sorted arrays.
+## Submission Specifications
 
-##Prerequisites
-Operating System: Ubuntu 22.04 LTS (Jammy Jellyfish)
+  * The node is written in **Python**.
+  * The package name is **`merge_arrays`** and the node name is **`merge_arrays_node`**.
+  * The node will be evaluated with the command `ros2 run merge_arrays merge_arrays_node`.
+  * No non-ROS dependencies were used.
+  * The full package is available in this public GitHub repository.
 
-ROS 2 Distribution: Humble Hawksbill
+-----
 
-Python: Version 3.8+
+## How to Build and Run
 
-###How to Build and Run
-Clone this repository into your ROS 2 workspace src directory.
-
-Bash
-
-cd <your_ros2_workspace>/src
-git clone [your-github-repo-url]
-Navigate to the root of your workspace and build the package.
-
-Bash
-
-cd <your_ros2_workspace>
-colcon build --packages-select merge_arrays
-Source your workspace to make the new package available.
-
-Bash
-
-source install/setup.bash
-Run the node.
-
-Bash
-
-ros2 run merge_arrays merge_arrays_node
+1.  Clone this repository into your ROS 2 workspace's `src` directory.
+    ```bash
+    cd <your_ros2_workspace>/src
+    git clone [repository-url]
+    ```
+2.  Navigate to the root of your workspace and build the package.
+    ```bash
+    cd <your_ros2_workspace>
+    colcon build --packages-select merge_arrays
+    ```
+3.  Source your workspace to make the package available.
+    ```bash
+    source install/setup.bash
+    ```
+4.  Run the node.
+    ```bash
+    ros2 run merge_arrays merge_arrays_node
+    ```
